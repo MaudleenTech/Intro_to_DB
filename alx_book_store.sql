@@ -4,7 +4,7 @@
 DROP DATABASE IF EXISTS ALX_BOOK_STORE;
 
 -- Create the database named ALX_BOOK_STORE
-CREATE DATABASE ALX_BOOK_STORE;
+CREATE DATABASE IF NOT EXISTS ALX_BOOK_STORE;
 
 -- Use the newly created database
 USE ALX_BOOK_STORE;
@@ -12,7 +12,7 @@ USE ALX_BOOK_STORE;
 -- --------------------------------------------------------
 -- Table structure for AUTHORS
 -- --------------------------------------------------------
-CREATE TABLE AUTHORS (
+CREATE TABLE IF NOT EXISTS AUTHORS (
     AUTHOR_ID INT PRIMARY KEY,
     AUTHOR_NAME VARCHAR(215) NOT NULL
 );
@@ -20,7 +20,7 @@ CREATE TABLE AUTHORS (
 -- --------------------------------------------------------
 -- Table structure for CUSTOMERS
 -- --------------------------------------------------------
-CREATE TABLE CUSTOMERS (
+CREATE TABLE IF NOT EXISTS CUSTOMERS (
     CUSTOMER_ID INT PRIMARY KEY,
     CUSTOMER_NAME VARCHAR(215) NOT NULL,
     EMAIL VARCHAR(215) NOT NULL UNIQUE,
@@ -31,7 +31,7 @@ CREATE TABLE CUSTOMERS (
 -- Table structure for BOOKS
 -- Depends on AUTHORS
 -- --------------------------------------------------------
-CREATE TABLE BOOKS (
+CREATE TABLE IF NOT EXISTS BOOKS (
     BOOK_ID INT PRIMARY KEY,
     TITLE VARCHAR(130) NOT NULL,
     AUTHOR_ID INT,
@@ -44,7 +44,7 @@ CREATE TABLE BOOKS (
 -- Table structure for ORDERS
 -- Depends on CUSTOMERS
 -- --------------------------------------------------------
-CREATE TABLE ORDERS (
+CREATE TABLE IF NOT EXISTS ORDERS (
     ORDER_ID INT PRIMARY KEY,
     CUSTOMER_ID INT,
     ORDER_DATE DATE NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE ORDERS (
 -- Table structure for ORDER_DETAILS
 -- Depends on ORDERS and BOOKS
 -- --------------------------------------------------------
-CREATE TABLE ORDER_DETAILS (
+CREATE TABLE IF NOT EXISTS ORDER_DETAILS (
     ORDERDETAILID INT PRIMARY KEY,
     ORDER_ID INT,
     BOOK_ID INT,
