@@ -17,11 +17,11 @@ def create_database():
         cursor = cnx.cursor()
 
         # Execute the SQL command
-        database_creation_query = f"CREATE DATABASE IF NOT EXISTS {DB_NAME}"
+        database_creation_query = f"CREATE DATABASE IF NOT EXISTS alx_book_store"
         
         cursor.execute(database_creation_query)
         
-        print(f"Database '{DB_NAME}' created successfully!")
+        print("Database 'alx_book_store' created successfully!")
 
     except mysql.connector.Error as err:
         # Handle connection errors
