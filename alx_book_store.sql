@@ -1,65 +1,46 @@
 -- Task 0: A Magical Database for Your Dream Online Bookstore Adventure!
 
--- Drop the database if it already exists to ensure a clean start
-DROP DATABASE IF EXISTS ALX_BOOK_STORE;
+CREATE DATABASE IF NOT EXISTS alx_book_store;
+USE alx_book_store;
 
--- Create the database named ALX_BOOK_STORE
-CREATE DATABASE IF NOT EXISTS ALX_BOOK_STORE;
-
--- Use the newly created database
-USE ALX_BOOK_STORE;
-
--- --------------------------------------------------------
--- Table structure for AUTHORS
--- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS AUTHORS (
-    AUTHOR_ID INT PRIMARY KEY,
-    AUTHOR_NAME VARCHAR(215) NOT NULL
+-- Create Authors table first
+CREATE TABLE IF NOT EXISTS Authors (
+    author_id INT AUTO_INCREMENT PRIMARY KEY,
+    author_name VARCHAR(215) NOT NULL
 );
 
--- --------------------------------------------------------
--- Table structure for CUSTOMERS
--- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS CUSTOMERS (
-    CUSTOMER_ID INT PRIMARY KEY,
-    CUSTOMER_NAME VARCHAR(215) NOT NULL,
-    EMAIL VARCHAR(215) NOT NULL UNIQUE,
-    ADDRESS TEXT
+-- Books table
+CREATE TABLE IF NOT EXISTS Books (
+    book_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(130) NOT NULL,
+    author_id INT,
+    published_date DATE,
+    price DOUBLE NOT NULL,
+    FOREIGN KEY (author_id) REFERENCES Authors(author_id)
 );
 
--- --------------------------------------------------------
--- Table structure for BOOKS
--- Depends on AUTHORS
--- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS BOOKS (
-    BOOK_ID INT PRIMARY KEY,
-    TITLE VARCHAR(130) NOT NULL,
-    AUTHOR_ID INT,
-    PRICE DOUBLE NOT NULL,
-    PUBLICATION_DATE DATE,
-    FOREIGN KEY (AUTHOR_ID) REFERENCES AUTHORS(AUTHOR_ID)
+-- Customers table
+CREATE TABLE IF NOT EXISTS Customers (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_name VARCHAR(215) NOT NULL,
+    email VARCHAR(215) UNIQUE NOT NULL,
+    address TEXT NOT NULL
 );
 
--- --------------------------------------------------------
--- Table structure for ORDERS
--- Depends on CUSTOMERS
--- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS ORDERS (
-    ORDER_ID INT PRIMARY KEY,
-    CUSTOMER_ID INT,
-    ORDER_DATE DATE NOT NULL,
-    FOREIGN KEY (CUSTOMER_ID) REFERENCES CUSTOMERS(CUSTOMER_ID)
+-- Orders table (FIXED foreign key)
+CREATE TABLE IF NOT EXISTS Orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
 );
 
--- --------------------------------------------------------
--- Table structure for ORDER_DETAILS
--- Depends on ORDERS and BOOKS
--- --------------------------------------------------------
-CREATE TABLE IF NOT EXISTS ORDER_DETAILS (
-    ORDERDETAILID INT PRIMARY KEY,
-    ORDER_ID INT,
-    BOOK_ID INT,
-    QUANTITY DOUBLE NOT NULL,
-    FOREIGN KEY (ORDER_ID) REFERENCES ORDERS(ORDER_ID),
-    FOREIGN KEY (BOOK_ID) REFERENCES BOOKS(BOOK_ID)
+-- Order Details table
+CREATE TABLE IF NOT EXISTS Order_Details (
+    orderdetailid INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT,
+    book_id INT,
+    quantity DOUBLE NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (book_id) REFERENCES Books(book_id)
 );
